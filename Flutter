@@ -1,0 +1,143 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyLibraryApp());
+
+class MyLibraryApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'My Library',
+      theme: ThemeData(primarySwatch: Colors.orange),
+      home: MyLibraryPage(),
+    );
+  }
+}
+
+class MyLibraryPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: [
+            UserAccountsDrawerHeader(
+              accountEmail: Text('EmailExample@gmail.com'),
+              currentAccountPicture: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: Icon(Icons.person, color: Colors.grey, size: 40),
+              ),
+              decoration: BoxDecoration(color: Colors.black),
+              accountName: null,
+            ),
+            _buildDrawerItem(Icons.home, 'Home'),
+            _buildDrawerItem(Icons.access_time, 'Recents'),
+            _buildDrawerItem(Icons.star, 'Top charts'),
+            _buildDrawerItem(Icons.new_releases, 'New Releases'),
+            _buildDrawerItem(Icons.library_music, 'Music Library'),
+            _buildDrawerItem(Icons.podcasts, 'Podcasts'),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Text('Downloaded Only'),
+                  Spacer(),
+                  Switch(value: false, onChanged: (val) {}),
+                ],
+              ),
+            ),
+            SizedBox(height: 16),
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        title: Row(
+          children: [
+            Text('My Library'),
+            Spacer(),
+            Icon(Icons.cast),
+            SizedBox(width: 16),
+            Icon(Icons.search),
+          ],
+        ),
+        backgroundColor: Colors.orange,
+      ),
+      body: Column(
+        children: [
+          Container(
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildTab('Gênero', false),
+                _buildTab('Artista', false),
+                _buildTab('Álbum', true),
+                _buildTab('Música', false),
+                _buildTab('Pla', false),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              color: Colors.grey[300],
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.folder_off, size: 80),
+                    SizedBox(height: 16),
+                    Text(
+                      'Ah, não! Parece que nenhum arquivo foi encontrado',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                      ),
+                      child: Text('Tentar de novo'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerItem(IconData icon, String title) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: () {},
+    );
+  }
+
+  Widget _buildTab(String label, bool isSelected) {
+    return Column(
+      children: [
+        SizedBox(height: 12),
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+          ),
+        ),
+        SizedBox(height: 4),
+        if (isSelected)
+          Container(
+            height: 3,
+            width: 30,
+            color: Colors.orange,
+          )
+        else
+          SizedBox(height: 3),
+      ],
+    );
+  }
+}
